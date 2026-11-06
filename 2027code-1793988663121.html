@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#102b25">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<title>Feeder Tracker Pro</title>
+<style>
+:root{--bg:#0b1714;--panel:#13251f;--panel2:#1a3028;--line:#29443a;--text:#f1f6f2;--muted:#a8bbb0;--green:#43b879;--green2:#267d50;--red:#d95b59;--gold:#e4b75b;--blue:#64a9d8;--radius:18px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:0 0 calc(86px + env(safe-area-inset-bottom))}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;padding:14px 14px 24px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 16px}.brand{font-size:20px;font-weight:850;letter-spacing:.2px}.brand small{display:block;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:1.4px}.pill{border:1px solid var(--line);border-radius:99px;padding:7px 11px;color:var(--muted);font-size:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:15px;margin:12px 0}.section-title{display:flex;align-items:center;justify-content:space-between;font-weight:800;margin:0 0 12px;font-size:16px}.muted{color:var(--muted)}.small{font-size:12px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:var(--panel2);border-radius:14px;padding:13px}.stat strong{font-size:27px;display:block;line-height:1.15}.stat span{color:var(--muted);font-size:12px}.stat.wide{grid-column:1/-1}.timer{text-align:center;background:linear-gradient(145deg,#173b30,#13251f)}.timer-value{font-size:48px;line-height:1.15;font-weight:850;font-variant-numeric:tabular-nums;letter-spacing:1px;margin:5px 0 12px}.timer-state{font-size:12px;color:#b8d9c6}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field label{font-size:12px;color:var(--muted);font-weight:700}.field input,.field select,.field textarea{width:100%;min-width:0;background:#0e1d18;color:var(--text);border:1px solid #365448;border-radius:11px;padding:12px;outline:none}.field textarea{min-height:76px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:13px;padding:14px 12px;font-weight:850;color:white;min-height:50px}.btn:active{transform:scale(.985)}.btn.green{background:var(--green2)}.btn.red{background:#963b3a}.btn.blue{background:#245d80}.btn.gold{background:#806126}.btn.ghost{background:var(--panel2);border:1px solid var(--line);color:var(--text)}.btn.smallbtn{min-height:38px;padding:8px 11px;font-size:13px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions .primary{grid-column:1/-1}.subactions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}.progress{height:8px;background:#263b32;border-radius:99px;overflow:hidden;margin-top:8px}.progress i{display:block;height:100%;background:var(--green);border-radius:99px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.list{display:flex;flex-direction:column;gap:8px}.event{background:var(--panel2);border-radius:12px;padding:10px 11px;border-left:4px solid var(--blue);font-size:13px}.event.fish{border-color:var(--green)}.event.miss{border-color:var(--red)}.event.cast{border-color:var(--blue)}.event .meta{color:var(--muted);font-size:11px;margin-top:3px}.hidden{display:none!important}.tabs{position:fixed;z-index:10;bottom:0;left:0;right:0;background:#0e1d18;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:7px 8px calc(7px + env(safe-area-inset-bottom));max-width:760px;margin:auto}.tab{border:0;background:transparent;color:var(--muted);font-size:11px;padding:7px 2px;border-radius:10px}.tab b{display:block;font-size:20px;margin-bottom:2px}.tab.active{background:#1b382c;color:#8ee0af}.view{display:none}.view.active{display:block}.tag{display:inline-block;border-radius:99px;padding:4px 8px;background:#263c31;color:#b9d8c5;font-size:11px}.barrow{display:grid;grid-template-columns: minmax(85px,1fr) 2fr 42px;gap:8px;align-items:center;font-size:12px;margin:9px 0}.bar{height:9px;border-radius:99px;background:#263b32;overflow:hidden}.bar i{display:block;height:100%;background:var(--green);border-radius:99px}.session-item{padding:12px;background:var(--panel2);border-radius:13px;margin:8px 0}.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.photo-grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px}.empty{text-align:center;color:var(--muted);padding:18px 8px;font-size:13px}.notice{padding:10px 12px;border-radius:12px;background:#243b30;color:#c9e5d3;font-size:12px;margin:10px 0}.footer-note{text-align:center;color:var(--muted);font-size:11px;margin:18px 0}
+@media(min-width:600px){.app{padding-top:22px}.stats-grid{grid-template-columns:repeat(4,1fr)}.stat.wide{grid-column:auto}.timer-value{font-size:54px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="brand">🎣 FEEDER TRACKER PRO<small>ПОЛЬОВИЙ ЖУРНАЛ РИБОЛОВЛІ</small></div><span class="pill" id="saveStatus">● Збережено</span></header>
+
+<section id="view-field" class="view active">
+  <div class="row" style="margin:0 2px 10px"><div><div class="muted small">ПОТОЧНА СЕСІЯ</div><strong id="sessionName">Сесію не розпочато</strong><div class="muted small" id="sessionMeta">Створи сесію, щоб почати облік</div></div><button class="btn green smallbtn" id="sessionBtn">＋ Нова сесія</button></div>
+  <div class="grid stats-grid">
+    <div class="stat"><strong id="fishCount">0</strong><span>🐟 Улови</span></div>
+    <div class="stat"><strong id="missCount">0</strong><span>❌ Холості</span></div>
+    <div class="stat"><strong id="castCount">0</strong><span>🎯 Закиди</span></div>
+    <div class="stat"><strong id="efficiency">0%</strong><span>ККД улову</span></div>
+  </div>
+  <div class="card timer">
+    <div class="timer-state" id="timerState">ТАЙМЕР НЕ АКТИВНИЙ</div><div class="timer-value" id="timer">00:00</div>
+    <div class="actions"><button class="btn blue primary" id="castBtn">🎯 ЗАКИНУТИ · СТАРТ</button><button class="btn ghost" id="pauseBtn">Ⅱ Пауза</button><button class="btn ghost" id="resetTimerBtn">↺ Скинути</button></div>
+  </div>
+  <div class="card">
+    <div class="section-title">⚡ Швидкий запис</div>
+    <div class="form-grid">
+      <div class="field"><label for="bait">Наживка на гачку</label><select id="bait"><option>Опариш</option><option>Мотиль</option><option>Черв'як</option><option>Кукурудза</option><option>Опариш + мотиль</option><option>Черв'як + кукурудза</option><option>Опариш + кукурудза</option><option>Пуфік / пінопласт</option><option>Бойл / пелетс</option><option>Інша</option></select></div>
+      <div class="field"><label for="fishType">Вид риби</label><select id="fishType"><option>Плітка</option><option>Карась</option><option>Лящ</option><option>Короп</option><option>Густера</option><option>Окунь</option><option>Інша</option></select></div>
+    </div>
+    <div class="actions" style="margin-top:12px"><button class="btn green" id="fishBtn">🐟 Є РИБА!</button><button class="btn red" id="missBtn">✕ Холостий</button></div>
+  </div>
+  <div class="card">
+    <div class="section-title">🎣 Поточна снасть <button class="btn ghost smallbtn" id="editSetupBtn">Змінити</button></div>
+    <div id="setupSummary" class="muted small">Параметри снасті ще не вказано.</div>
+  </div>
+  <div class="card" id="liveWeatherCard">
+    <div class="row" style="margin-bottom:12px">
+      <div><div class="section-title" style="margin:0">🌤️ Погода (Київська обл.)</div><div class="muted small" id="weatherPlace">Очікуємо погодні дані</div></div>
+      <button class="btn ghost smallbtn" id="weatherRefreshBtn">↻ Оновити</button>
+    </div>
+    <div class="grid">
+      <div class="stat"><strong id="weatherTemp">—°</strong><span>🌡 Температура</span></div>
+      <div class="stat"><strong id="weatherPressure">—</strong><span>● Тиск, мм рт. ст.</span></div>
+      <div class="stat"><strong id="weatherWind">—</strong><span>💨 Вітер</span></div>
+      <div class="stat"><strong id="weatherDirection">—</strong><span>↗ Напрямок</span></div>
+    </div>
+    <div class="row" style="margin-top:10px"><span class="muted small" id="weatherUpdated">Завантаження...</span><button class="btn ghost smallbtn" id="weatherLocationBtn">📍 Місце</button></div>
+    <div class="muted small" id="weatherMessage" style="margin-top:7px">Автоматично показується загальна погода для Київської області.</div>
+  </div>
+  <div class="card">
+    <div class="section-title">Останні події <button class="btn ghost smallbtn" id="showHistoryBtn">Уся історія</button></div>
+    <div id="recentEvents" class="list"><div class="empty">Подій поки немає</div></div>
+  </div>
+</section>
+
+<section id="view-session" class="view">
+  <div class="section-title">🗒️ Сесія та умови</div>
+  <div class="card">
+    <div class="section-title">Поточна риболовля</div>
+    <div class="field"><label for="sName">Назва / водойма</label><input id="sName" placeholder="Наприклад: Дніпро, затока біля мосту"></div>
+    <div class="form-grid" style="margin-top:10px">
+      <div class="field"><label for="sDate">Дата</label><input id="sDate" type="date"></div>
+      <div class="field"><label for="sStart">Час початку</label><input id="sStart" type="time"></div>
+    </div>
+    <div class="subactions"><button class="btn green" id="saveSessionBtn">Зберегти сесію</button><button class="btn gold" id="finishSessionBtn">Завершити сесію</button></div>
+  </div>
+  <div class="card">
+    <div class="section-title">🌤️ Погода для сесії</div>
+    <div class="notice">За замовчуванням підтягується середня погода Київської області. Можна оновити або змінити локацію на головному екрані.</div>
+    <div id="sessionWeatherStatus" class="muted small">Очікуємо дані погоди…</div>
+  </div>
+  <div class="card">
+    <div class="section-title">🧰 Параметри снасті</div>
+    <div class="form-grid">
+      <div class="field"><label for="rod">Вудилище</label><input id="rod" placeholder="3.6 м, medium"></div>
+      <div class="field"><label for="feeder">Годівниця</label><input id="feeder" placeholder="Клітка, 60 г"></div>
+      <div class="field"><label for="leader">Поводець, см</label><input id="leader" type="number" placeholder="60"></div>
+      <div class="field"><label for="leaderDia">Діаметр, мм</label><input id="leaderDia" type="number" step="0.01" placeholder="0.12"></div>
+      <div class="field"><label for="hook">Гачок</label><input id="hook" placeholder="№ 12"></div>
+      <div class="field"><label for="distance">Дистанція, м</label><input id="distance" type="number" placeholder="35"></div>
+      <div class="field"><label for="groundbait">Прикормка</label><input id="groundbait" placeholder="Назва / склад"></div>
+      <div class="field"><label for="rig">Монтаж</label><select id="rig"><option value="">Не вказано</option><option>Патерностер</option><option>Інлайн</option><option>Симетрична петля</option><option>Асиметрична петля</option><option>Метод</option><option>Інший</option></select></div>
+    </div>
+    <button class="btn green" style="width:100%;margin-top:12px" id="saveConditionsBtn">Зберегти снасть</button>
+  </div>
+  <div class="card"><div class="section-title">Архів сесій</div><div id="sessionsArchive"></div></div>
+</section>
+
+<section id="view-stats" class="view">
+  <div class="section-title">📊 Аналітика наживок</div>
+  <div class="card"><div class="section-title">Ефективність наживок</div><div id="baitAnalytics"></div></div>
+  <div class="card"><div class="section-title">Улов за видами риби</div><div id="fishAnalytics"></div></div>
+  <div class="card"><div class="section-title">Показники сесії</div><div id="sessionStats" class="grid"></div></div>
+  <div class="card"><div class="section-title">Повна історія подій</div><div id="allEvents" class="list"></div></div>
+</section>
+
+<section id="view-more" class="view">
+  <div class="section-title">📷 Фото улову</div>
+  <div class="card">
+    <div class="field"><label for="photoFile">Додати фото з камери або галереї</label><input id="photoFile" type="file" accept="image/*" capture="environment"></div>
+    <div class="field" style="margin-top:10px"><label for="photoCaption">Підпис до фото</label><input id="photoCaption" placeholder="Наприклад: лящ, 1.2 кг"></div>
+    <div id="photoGallery" class="photo-grid" style="margin-top:12px"></div>
+  </div>
+  <div class="section-title">💾 Резервне копіювання</div>
+  <div class="card">
+    <div class="subactions"><button class="btn green" id="exportBtn">⬇ Експорт копії</button><button class="btn blue" id="importBtn">⬆ Відновити копію</button></div>
+    <input type="file" id="importFile" accept="application/json,.json" class="hidden">
+    <div class="notice" id="backupInfo">Резервна копія ще не створювалася.</div>
+  </div>
+  <div class="card">
+    <div class="section-title">Керування даними</div>
+    <button class="btn ghost" id="csvBtn" style="width:100%">Експорт подій у CSV</button>
+    <button class="btn red" id="resetAllBtn" style="width:100%;margin-top:9px">Видалити всі дані</button>
+  </div>
+</section>
+</div>
+
+<nav class="tabs">
+  <button class="tab active" data-view="field"><b>🎣</b>Риболовля</button>
+  <button class="tab" data-view="session"><b>🗒️</b>Сесія</button>
+  <button class="tab" data-view="stats"><b>📊</b>Статистика</button>
+  <button class="tab" data-view="more"><b>⚙️</b>Ще</button>
+</nav>
+<div id="toast" style="position:fixed;left:50%;bottom:95px;transform:translateX(-50%);background:#e8f4ec;color:#143523;padding:10px 16px;border-radius:99px;font-size:13px;font-weight:700;z-index:30;display:none;max-width:90%;text-align:center"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const KEY='feederTrackerPro_v2';
+const DEFAULT_LAT = 50.4501;
+const DEFAULT_LON = 30.5234;
+const DEFAULT_PLACE = 'Київська обл.';
+
+const fresh=()=>({sessions:[],activeId:null,events:[],photos:[],timer:{running:false,startedAt:null,elapsed:0},lastBackup:null,weather:{lat:DEFAULT_LAT,lon:DEFAULT_LON,place:DEFAULT_PLACE,current:null,updatedAt:null}});
+let data=load();let tick=null;
+
+function load(){
+  try{
+    const saved=localStorage.getItem(KEY);
+    if(saved)return {...fresh(),...JSON.parse(saved)};
+    return fresh();
+  }catch(e){return fresh()}
+}
+
+function save(){
+  try{
+    localStorage.setItem(KEY,JSON.stringify(data));
+    if($('saveStatus')){$('saveStatus').textContent='● Збережено';
+      $('saveStatus').style.color='#a8bbb0';
+    }
+  }catch(e){
+    if($('saveStatus')){$('saveStatus').textContent='⚠ Помилка памʼяті';
+      $('saveStatus').style.color='#ff9a94';
+    }
+  }
+}
+
+function toast(s){
+  const t=$('toast');
+  if(!t)return;
+  t.textContent=s;
+  t.style.display='block';
+  clearTimeout(toast.t);
+  toast.t=setTimeout(()=>t.style.display='none',2300);
+}
+
+function active(){return data.sessions.find(s=>s.id===data.activeId)||null}
+function dateNow(){return new Date().toISOString().slice(0,10)}
+function makeSession(){return {id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name:'Нова риболовля',date:dateNow(),start:new Date().toTimeString().slice(0,5),note:'',weather:{},tackle:{},finished:false,created:Date.now()}}
+
+function startSession(){
+  if(data.timer.running){toast('Спочатку заверши поточний закид');return}
+  const s=makeSession();
+  data.sessions.unshift(s);
+  data.activeId=s.id;
+  save();
+  fillSessionForm();
+  render();
+  switchView('session');
+  toast('Нова сесія створена');
+}
+
+function fillSessionForm(){
+  const s=active()||makeSession();
+  if($('sName'))$('sName').value=s.name||'';
+  if($('sDate'))$('sDate').value=s.date||dateNow();
+  if($('sStart'))$('sStart').value=s.start||'';
+  const t=s.tackle||{};
+  ['rod','feeder','leader','leaderDia','hook','distance','groundbait','rig'].forEach(k=>{
+    if($(k))$(k).value=t[k]??'';
+  });
+  if($('sessionWeatherStatus'))$('sessionWeatherStatus').textContent=data.weather.current?'Погода: '+new Date(data.weather.updatedAt).toLocaleString('uk-UA')+' · '+data.weather.place:'Погода завантажується...';
+}
+
+function readFields(keys){
+  const o={};
+  keys.forEach(k=>{if($(k)) o[k]=$(k).value.trim()});
+  return o;
+}
+
+function saveSession(){
+  let s=active();
+  if(!s){s=makeSession();data.sessions.unshift(s);data.activeId=s.id}
+  Object.assign(s,{name:$('sName').value.trim()||'Риболовля',date:$('sDate').value\vert{}\vert{}dateNow(),start:$('sStart').value});
+  save();
+  render();
+  toast('Сесію збережено');
+}
+
+function saveConditions(){
+  let s=active();
+  if(!s){toast('Спочатку створи сесію');return}
+  s.tackle=readFields(['rod','feeder','leader','leaderDia','hook','distance','groundbait','rig']);
+  save();
+  render();
+  toast('Параметри снасті збережено');
+}
+
+function finishSession(){
+  const s=active();
+  if(!s){toast('Немає активної сесії');return}
+  if(data.timer.running){toast('Заверши поточний закид');return}
+  s.finished=true;
+  data.activeId=null;
+  save();
+  render();
+  fillSessionForm();
+  toast('Сесію завершено');
+}
+
+function elapsed(){return data.timer.elapsed+(data.timer.running&&data.timer.startedAt?Math.max(0,Date.now()-data.timer.startedAt):0)}
+function fmt(ms){let n=Math.floor(ms/1000),h=Math.floor(n/3600),m=Math.floor(n%3600/60),s=n%60;return h?`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+
+function updateTimer(){
+  if($('timer'))$('timer').textContent=fmt(elapsed());
+  if($('timerState'))$('timerState').textContent=data.timer.running?'● ЗАКИД У ВОДІ':'ТАЙМЕР НЕ АКТИВНИЙ';
+  if($('pauseBtn'))$('pauseBtn').textContent=data.timer.running?'Ⅱ Пауза':'▶ Продовжити';
+}
+
+function startCast(){
+  if(!active()){toast('Спочатку створи сесію');return}
+  if(data.timer.running){toast('Таймер працює');return}
+  if(data.timer.elapsed>0&&data.currentCastId){
+    data.timer.running=true;
+    data.timer.startedAt=Date.now();
+    tick=setInterval(updateTimer,500);
+    save();
+    updateTimer();
+    return;
+  }
+  data.timer.running=true;
+  data.timer.startedAt=Date.now();
+  const ev={id:Date.now()+Math.random(),sessionId:data.activeId,type:'cast',bait:$('bait').value,fishType:$('fishType').value,time:Date.now(),duration:0};
+  data.events.unshift(ev);
+  data.currentCastId=ev.id;
+  save();
+  updateTimer();
+  if(tick)clearInterval(tick);
+  tick=setInterval(updateTimer,500);
+  render();
+}
+
+function pauseTimer(){
+  if(data.timer.running){
+    data.timer.elapsed=elapsed();
+    data.timer.running=false;
+    data.timer.startedAt=null;
+    if(tick)clearInterval(tick);
+    save();
+    updateTimer();
+  }else if(data.timer.elapsed>0){
+    data.timer.running=true;
+    data.timer.startedAt=Date.now();
+    tick=setInterval(updateTimer,500);
+    save();
+    updateTimer();
+  }
+}
+
+function resetTimer(){
+  if(!data.timer.running&&!data.timer.elapsed)return;
+  if(!confirm('Скинути таймер закиду?'))return;
+  data.timer={running:false,startedAt:null,elapsed:0};
+  if(tick)clearInterval(tick);
+  save();
+  updateTimer();
+}
+
+function logResult(type){
+  if(!active()){toast('Спочатку створи сесію');return}
+  const current=data.events.find(e=>e.id===data.currentCastId);
+  let duration=elapsed();
+  if(current&¤t.type==='cast'&&!current.result){
+    current.result=type;
+    current.duration=duration;
+    current.fishType=$('fishType').value;
+  }else{
+    data.events.unshift({id:Date.now()+Math.random(),sessionId:data.activeId,type:'cast',result:type,bait:$('bait').value,fishType:$('fishType').value,time:Date.now(),duration});
+  }
+  data.timer={running:false,startedAt:null,elapsed:0};
+  data.currentCastId=null;
+  if(tick)clearInterval(tick);
+  save();
+  render();
+  updateTimer();
+  toast(type==='fish'?'Улов записано!':'Холостий записано');
+}
+
+function sessionEvents(id){return data.events.filter(e=>e.sessionId===id)}
+function statsFor(events){
+  const casts=events.filter(e=>e.type==='cast');
+  const fish=casts.filter(e=>e.result==='fish').length;
+  const misses=casts.filter(e=>e.result==='miss').length;
+  return {casts:casts.length,fish,misses,eff:casts.length?Math.round(fish/(fish+misses||1)*100):0};
+}
+
+function eventText(e){
+  if(e.type==='cast')return `🎯 Закид · ${e.bait}${e.result==='fish'?' · 🐟 Улов':e.result==='miss'?' · ❌ Холостий':''}`;
+  return `${e.type==='fish'?'🐟 Улов':'❌ Холостий'} · ${e.fishType||''} · ${e.bait||''}`;
+}
+
+function eventNode(e){
+  const d=document.createElement('div');
+  d.className='event '+(e.result||e.type);
+  d.innerHTML=`<div>${escapeHtml(eventText(e))}</div><div class="meta">${new Date(e.time).toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'})}${e.duration?' · ⏱ '+fmt(e.duration):''}</div>`;
+  return d;
+}
+
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&','<':'<','>':'>','"':'"',"'":'''}[c]))}
+
+function render(){
+  const s=active(),ev=s?sessionEvents(s.id):[],st=statsFor(ev);
+  if($('sessionName'))$('sessionName').textContent=s?s.name:'Сесію не розпочато';
+  if($('sessionMeta'))$('sessionMeta').textContent=s?`${s.date} · ${s.start||'час не вказано'}`:'Створи сесію';
+  if($('fishCount'))$('fishCount').textContent=st.fish;
+  if($('missCount'))$('missCount').textContent=st.misses;
+  if($('castCount'))$('castCount').textContent=st.casts;
+  if($('efficiency'))$('efficiency').textContent=st.eff+'%';
+  
+  if($('recentEvents')){$('recentEvents').replaceChildren(...(ev.slice(0,5).map(eventNode)));
+    if(!ev.length)$('recentEvents').innerHTML='<div class="empty">Подій поки немає</div>';
+  }
+  
+  const t=s?.tackle||{};
+  let parts=[];
+  if(t.feeder)parts.push(`Годівниця: ${t.feeder}`);
+  if(t.leader)parts.push(`Поводець: ${t.leader} см`);
+  if($('setupSummary'))$('setupSummary').textContent=parts.join(' · ')||'Додай параметри снасті у вкладці «Сесія».';
+  
+  renderAnalytics();
+  renderArchive();
+  renderPhotos();
+}
+
+function renderAnalytics(){
+  const s=active(),ev=s?sessionEvents(s.id):[],casts=ev.filter(e=>e.type==='cast');
+  const baits={};
+  casts.forEach(e=>{
+    let b=baits[e.bait]||{casts:0,fish:0,miss:0};
+    b.casts++;
+    if(e.result==='fish')b.fish++;
+    if(e.result==='miss')b.miss++;
+    baits[e.bait]=b;
+  });
+  const entries=Object.entries(baits).sort((a,b)=>b[1].fish-a[1].fish);
+  if($('baitAnalytics')){$('baitAnalytics').innerHTML=entries.length?entries.map(([name,v])=>{
+      let pct=v.casts?Math.round(v.fish/(v.fish+v.miss||1)*100):0;
+      return `<div class="barrow"><span>${escapeHtml(name)}</span><div><div class="bar"><i style="width:${pct}%"></i></div><div class="muted small">${v.fish} уловів / ${v.miss} холостих</div></div><b>${pct}%</b></div>`;
+    }).join(''):'<div class="empty">Немає даних для аналітики</div>';
+  }
+  
+  if($('allEvents')){$('allEvents').replaceChildren(...(ev.map(eventNode)));
+    if(!ev.length)$('allEvents').innerHTML='<div class="empty">Історія порожня</div>';
+  }
+}
+
+function renderArchive(){
+  if(!$('sessionsArchive'))return;
+  $('sessionsArchive').innerHTML=data.sessions.length?data.sessions.map(s=>{
+    const st=statsFor(sessionEvents(s.id));
+    return `<div class="session-item"><div class="row"><b>${escapeHtml(s.name)}</b><span class="tag">${s.finished?'Завершена':'Активна'}</span></div><div class="muted small">${s.date} · ${st.fish} уловів · ${st.casts} закидів</div><button class="btn ghost smallbtn" style="margin-top:8px" data-open-session="${s.id}">Відкрити</button></div>`;
+  }).join(''):'<div class="empty">Архів порожній</div>';
+}
+
+function renderPhotos(){
+  if(!$('photoGallery'))return;
+  $('photoGallery').innerHTML=data.photos.length?data.photos.map(p=>`<div><img src="${p.data}" alt="${escapeHtml(p.caption)}"><div class="small muted">${escapeHtml(p.caption||'Улов')}</div></div>`).join(''):'<div class="empty" style="grid-column:1/-1">Фото відсутні</div>';
+}
+
+function switchView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
+  if(name==='session')fillSessionForm();
+  render();
+}
+
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
+
+if($('sessionBtn'))$('sessionBtn').onclick=startSession;
+if($('editSetupBtn'))$('editSetupBtn').onclick=()=>switchView('session');
+if($('showHistoryBtn'))$('showHistoryBtn').onclick=()=>switchView('stats');
+if($('castBtn'))$('castBtn').onclick=startCast;
+if($('pauseBtn'))$('pauseBtn').onclick=pauseTimer;
+if($('resetTimerBtn'))$('resetTimerBtn').onclick=resetTimer;
+if($('fishBtn'))$('fishBtn').onclick=()=>logResult('fish');
+if($('missBtn'))$('missBtn').onclick=()=>logResult('miss');
+if($('save
