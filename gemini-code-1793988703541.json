@@ -1,0 +1,15 @@
+{
+  "name": "Feeder Tracker Pro",
+  "short_name": "FeederTracker",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b1714",
+  "theme_color": "#102b25",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2972/2972322.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
